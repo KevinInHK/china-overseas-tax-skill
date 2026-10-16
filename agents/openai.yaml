@@ -1,0 +1,4 @@
+interface:
+  display_name: "券商投资税务助手"
+  short_description: "理解客户账单与问题，核算境外券商投资所得并整理可追溯的税务材料"
+  default_prompt: "用 $china-overseas-tax-skill 处理我的券商投资税务问题，先看已有资料；年度测算完成后给出CRS对账、报税及滞纳金估算、税局说明草拟的后续选项；我已明确的专项请求直接处理。"

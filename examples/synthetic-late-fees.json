@@ -1,0 +1,18 @@
+{
+  "tax_principal_rmb": "10000.00",
+  "principal_status": "assumed_before_credit",
+  "principal_basis": "Synthetic example only: assume before-credit principal is fully due; not a customer case",
+  "due_date": "2025-06-30",
+  "due_date_basis": "Synthetic explicit deadline, not a reusable legal determination",
+  "as_of_date": "2025-07-02",
+  "applicability": "ordinary",
+  "applicability_basis": "Synthetic example assumes ordinary overdue rules apply",
+  "payment_history_basis": "Synthetic complete history: one allocated principal payment",
+  "payments": [
+    {
+      "date": "2025-07-01",
+      "principal_rmb": "4000.00",
+      "source": "Synthetic principal-only receipt"
+    }
+  ]
+}

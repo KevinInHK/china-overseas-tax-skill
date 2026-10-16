@@ -1,0 +1,108 @@
+{
+  "config": {
+    "year": 2024,
+    "fx": {
+      "USD": "1"
+    },
+    "fx_basis": "Synthetic demonstration rate, not an official quote",
+    "tax_rate": "0.20",
+    "capital_netting": "per_disposal"
+  },
+  "events": [
+    {
+      "id": "demo-buy",
+      "kind": "buy",
+      "date": "2024-01-01",
+      "account": "SYNTHETIC-A",
+      "asset": "DEMO",
+      "currency": "USD",
+      "country": "US",
+      "tax_category": "capital",
+      "reviewed": true,
+      "source": {
+        "file": "synthetic-example",
+        "locator": "demo-buy"
+      },
+      "quantity": "10",
+      "amount": "100",
+      "fees": "1"
+    },
+    {
+      "id": "demo-sell",
+      "kind": "sell",
+      "date": "2024-02-01",
+      "account": "SYNTHETIC-A",
+      "asset": "DEMO",
+      "currency": "USD",
+      "country": "US",
+      "tax_category": "capital",
+      "reviewed": true,
+      "source": {
+        "file": "synthetic-example",
+        "locator": "demo-sell"
+      },
+      "quantity": "10",
+      "amount": "150",
+      "fees": "1"
+    },
+    {
+      "id": "demo-dividend",
+      "kind": "dividend",
+      "date": "2024-03-01",
+      "account": "SYNTHETIC-A",
+      "asset": "DEMO",
+      "currency": "USD",
+      "country": "US",
+      "tax_category": "income",
+      "reviewed": true,
+      "source": {
+        "file": "synthetic-example",
+        "locator": "demo-dividend"
+      },
+      "amount": "20"
+    },
+    {
+      "id": "demo-tax",
+      "kind": "withheld",
+      "date": "2024-03-01",
+      "account": "SYNTHETIC-A",
+      "asset": "DEMO",
+      "currency": "USD",
+      "country": "US",
+      "tax_category": "capital",
+      "reviewed": true,
+      "source": {
+        "file": "synthetic-example",
+        "locator": "demo-tax"
+      },
+      "amount": "2",
+      "income_id": "demo-dividend",
+      "income_year": 2024,
+      "eligible": true,
+      "evidence": "Synthetic tax certificate for demo only"
+    },
+    {
+      "id": "demo-refund",
+      "kind": "refund",
+      "date": "2025-02-01",
+      "account": "SYNTHETIC-A",
+      "asset": "DEMO",
+      "currency": "USD",
+      "country": "US",
+      "tax_category": "capital",
+      "reviewed": true,
+      "source": {
+        "file": "synthetic-example",
+        "locator": "demo-refund"
+      },
+      "amount": "1",
+      "withholding_id": "demo-tax"
+    }
+  ],
+  "completeness": {
+    "verified": true,
+    "scope": "all synthetic demonstration records only",
+    "basis": "complete synthetic fixture",
+    "gaps": []
+  }
+}

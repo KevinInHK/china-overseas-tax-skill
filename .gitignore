@@ -1,0 +1,13 @@
+work/
+private/
+outputs/
+__pycache__/
+*.pyc
+.env*
+*.pdf
+*.xlsx
+*.xls
+*.csv
+*.docx
+
+dist/
