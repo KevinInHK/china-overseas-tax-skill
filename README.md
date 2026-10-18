@@ -2,6 +2,12 @@
 
 帮助中国大陆税收居民理解券商账单、核算境外投资所得，并准备可复核的税务说明。当前版本：**0.1.19**，实验性辅助工具。
 
+## 联系作者
+
+如需人工支持，请简单描述，并发送邮件至：**[china_overseas_tax@163.com](mailto:china_overseas_tax@163.com)**。
+
+联系人：Kevin。可以由您自行发送，也可以让AI按[支持说明](SUPPORT.md)整理咨询邮件；AI代发前须获得您的明确授权。首次联系只需描述问题，无需附完整账单，请勿发送密码或证件号码。
+
 这是一个 **Agent Skill**：由支持技能的 AI 助手读取规则、按需加载参考资料、运行计算脚本。它不是独立运行的 Agent、券商连接器或自动申报服务。`agents/openai.yaml` 仅是技能展示及调用提示元数据，不会启动独立 Agent。
 
 另有独立的 [Codex官方提交候选版](distribution/codex/README.md) 构建配置；它不改变本普通版的邮箱和文书提示设置，也尚未提交或获批。生成方式：`python scripts/build_official.py`。候选版的换环境验证与扩展案例测试暂缓。
@@ -16,10 +22,10 @@
 
 ## 安装与使用
 
-下载 [Releases](https://github.com/tiemuzhenhu123-debug/china-overseas-tax-skill/releases) 中的 ZIP 并解压，或克隆源码：
+下载 [Releases](https://github.com/KevinInHK/china-overseas-tax-skill/releases) 中的 ZIP 并解压，或克隆源码：
 
 ```bash
-git clone https://github.com/tiemuzhenhu123-debug/china-overseas-tax-skill.git
+git clone https://github.com/KevinInHK/china-overseas-tax-skill.git
 ```
 
 用 AI 平台的技能安装功能选择包含 `SKILL.md` 的目录，或将它放入该平台配置的技能目录。具体发现目录取决于平台，不需要修改技能文件路径。若不支持自动发现，可让具备文件读取能力的助手先读取本目录 `SKILL.md` 再处理任务。
