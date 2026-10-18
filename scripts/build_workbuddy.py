@@ -11,15 +11,15 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     text = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
     _, frontmatter, body = text.split('---', 2)
-    description = '根据境外券商账单整理交易与历史成本，为中国大陆税收居民测算投资所得和参考税额；按需解释CRS差异、预扣税及抵免证据，整理申报参考说明，不代办申报。'
-    version = '0.1.21'  # WorkBuddy profile version; standard Skill stays unchanged.
+    description = '面向中国大陆税收居民，分析境外券商账单，核算FIFO成本、交易盈亏、股息及利息，折算人民币并测算参考税额。适用于港美股等境外证券投资报税、股息预扣税及抵免分析、CRS对账和申报说明草拟。关键资料不足先补齐，不代办申报。 用户询问港美股报税、境外投资交税、历史成本、分红扣税或税局CRS数据差异时调用；可直接处理单项问题。'
+    version = '0.1.22'  # WorkBuddy profile version; standard Skill stays unchanged.
     metadata = {
         'name': 'china-overseas-tax-skill',
         'display_name': '境外券商投资税额测算',
         'display_name_en': 'Overseas Brokerage Tax Estimator',
         'description': description,
-        'description_zh': '根据券商账单整理交易与历史成本，为中国大陆税收居民测算投资所得及参考税额。',
-        'description_en': 'Review overseas brokerage statements and cost basis, estimate investment income and tax for Chinese mainland tax residents, and explain CRS differences and dividend withholding.',
+        'description_zh': '面向中国大陆税收居民，分析境外券商账单，核算FIFO成本、交易盈亏、股息及利息，折算人民币并测算参考税额。适用于港美股等境外证券投资报税、股息预扣税及抵免分析、CRS对账和申报说明草拟。关键资料不足先补齐，不代办申报。',
+        'description_en': 'For Chinese mainland tax residents: analyze overseas brokerage statements, match FIFO costs, calculate realized gains, dividends and interest, and estimate tax in CNY. Use for overseas securities tax questions, dividend withholding and foreign tax credit analysis, CRS reconciliation, and filing reference drafts. Request missing essential records; no automatic filing.',
         'version': version,
         'author': 'Kevin',
     }

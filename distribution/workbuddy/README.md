@@ -1,14 +1,14 @@
 # WorkBuddy 提交准备
 
-状态：基于普通版0.1.20的独立提交候选，版本0.1.21。尚未安装验证、提交审核或上架；个人主体类目及支持邮箱展示规则待平台确认。普通版和Codex候选包不受影响。
+状态：基于普通版0.1.20的独立提交候选，版本0.1.22。尚未安装验证、提交审核或上架；个人主体类目及支持邮箱展示规则待平台确认。普通版和Codex候选包不受影响。
 
 ## 可填写的展示信息
 
 - 中文名称：境外券商投资税额测算
 - 英文名称：Overseas Brokerage Tax Estimator
 - 作者展示名：Kevin（实名认证使用本人真实信息，不用昵称代替）
-- 中文简介：根据券商账单整理交易与历史成本，为中国大陆税收居民测算投资所得及参考税额。
-- 英文简介：Review overseas brokerage statements and cost basis, estimate investment income and tax for Chinese mainland tax residents, and explain CRS differences and dividend withholding.
+- 中文简介：面向中国大陆税收居民，分析境外券商账单，核算FIFO成本、交易盈亏、股息及利息，折算人民币并测算参考税额。适用于港美股等境外证券投资报税、股息预扣税及抵免分析、CRS对账和申报说明草拟。关键资料不足先补齐，不代办申报。
+- 英文简介：For Chinese mainland tax residents: analyze overseas brokerage statements, match FIFO costs, calculate realized gains, dividends and interest, and estimate tax in CNY. Use for overseas securities tax questions, dividend withholding and foreign tax credit analysis, CRS reconciliation, and filing reference drafts. Request missing essential records; no automatic filing.
 - 使用方式：免费。不开通收入变现；不展示价格或付费升级。
 - 项目主页：https://github.com/KevinInHK/china-overseas-tax-skill
 - 隐私说明：https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/PRIVACY.md
@@ -32,7 +32,7 @@
 
 ## 包和能力边界
 
-在仓库根运行 `python scripts/build_workbuddy.py`，生成 `dist/china-overseas-tax-workbuddy-0.1.21.zip`。ZIP内是单一技能目录，包含必填中英文描述、作者及版本元数据、共享规则、脚本、隐私和支持资料。不包含OpenAI插件清单、客户文件、本机路径、邮箱凭据或独立邮件服务。
+在仓库根运行 `python scripts/build_workbuddy.py`，生成 `dist/china-overseas-tax-workbuddy-0.1.22.zip`。ZIP内是单一技能目录，包含必填中英文描述、作者及版本元数据、共享规则、脚本、隐私和支持资料。不包含OpenAI插件清单、客户文件、本机路径、邮箱凭据或独立邮件服务。
 
 不关闭模型自动调用，不限定不存在的工具权限；Python、文件读取、OCR、网络及邮件工具是否可用以WorkBuddy实际环境为准。静态检查不等于客户端验证或平台审核。候选保留普通版支持入口规则，平台尚未确认其展示要求；后续仅按真实反馈调整，不假称已获许可。
 
@@ -52,3 +52,5 @@
 - [服务类目与资质说明](https://open.workbuddy.cn/docs/service-categories-enterprise)
 
 公开文档未明确本工具的个人类目归属及作者邮箱展示限制；不能把“未找到限制”解读为已获批准。
+
+能力介绍由包内`description_zh`解析，不在平台页面直接编辑。`description`另包含自然语言调用场景；修改后须上传新包。0.1.22仅调整描述与版本，邮件支持流程和计算逻辑不变。
