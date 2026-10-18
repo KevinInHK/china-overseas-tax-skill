@@ -36,7 +36,7 @@ def package_files():
     for name in ('test_calculate.py', 'test_late_fees.py'):
         include(ROOT / 'tests' / name, SKILL + 'tests/' + name)
     for name in ('evidence.md', 'tax-rules.md', 'records.md',
-                 'crs-reconciliation.md', 'dividend-credit.md', 'filing-and-late-fees.md'):
+                 'crs-reconciliation.md', 'dividend-credit.md', 'filing-and-late-fees.md', 'human-support.md'):
         include(ROOT / 'references' / name, SKILL + 'references/' + name)
     include(PROFILE / 'privacy-and-runtime.md', SKILL + 'references/privacy-and-runtime.md')
 
@@ -58,7 +58,7 @@ def package_files():
     files[SKILL + 'references/tax-authority-drafts.md'] = (before + replacement + after).encode('utf-8')
     files['README.md'] = '''# 券商投资税务助手：官方提交候选包
 
-版本1.0.0-rc.1，基于原版0.1.18共享的算术脚本及参考资料。
+版本1.0.0-rc.2，基于原版0.1.19共享的算术脚本及参考资料。
 
 这是需要本地执行能力的skills-only插件包，不含MCP、hooks、遥测或作者服务器。按平台提供的本地插件安装流程使用；安装并不代表官方已审核或已上架。Python、PDF/Excel读取和OCR能力须由执行环境提供。
 
@@ -70,7 +70,7 @@ def package_files():
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(files.items())}
     files['PACKAGE-RECEIPT.json'] = json.dumps({
         'profile': 'codex-submission-candidate', 'version': manifest['version'],
-        'base_version': '0.1.18', 'checks': 'packaging/static only',
+        'base_version': '0.1.19', 'checks': 'packaging/static only',
         'runtime_validation': 'deferred by user', 'expanded_cases': 'deferred by user',
         'publication': 'not submitted or approved', 'sha256': hashes
     }, ensure_ascii=False, indent=2).encode('utf-8')

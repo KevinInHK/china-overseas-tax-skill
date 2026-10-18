@@ -1,15 +1,20 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "china-overseas-tax",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Review overseas brokerage statements and prepare traceable investment-income tax estimates for Chinese mainland tax residents.",
   "author": {
-    "name": "KevinInHK",
+    "name": "Kevin",
     "email": "china_overseas_tax@163.com"
   },
   "repository": "https://github.com/KevinInHK/china-overseas-tax-skill",
   "license": "MIT",
-  "keywords": ["brokerage-statements", "investment-income", "tax-estimates", "fifo"],
+  "keywords": [
+    "brokerage-statements",
+    "investment-income",
+    "tax-estimates",
+    "fifo"
+  ],
   "extensions": {
     "com.openai": {
       "requires_local_executor": true,
@@ -17,10 +22,18 @@
         "displayName": "券商投资税务助手",
         "shortDescription": "整理境外券商账单与所得测算",
         "longDescription": "帮助中国大陆税收居民梳理券商账单、历史成本和股息扣税，形成可追溯的年度测算、CRS对照及申报参考说明。原始文件识别依赖执行环境；缺少核心证据时保留缺口，不代登录、提交或缴款。结果不是税务机关核定结论。",
-        "developerName": "KevinInHK",
+        "developerName": "Kevin",
         "category": "Productivity",
-        "capabilities": ["Review brokerage statements", "Estimate income and tax", "Prepare reference explanations"],
-        "defaultPrompt": ["帮我核对境外券商账单，说明年度测算需要哪些资料。", "对照我提供的CRS合计与年度账单，说明能确认的差异。", "根据已复核的年度测算，草拟一页税务机关情况说明。"],
+        "capabilities": [
+          "Review brokerage statements",
+          "Estimate income and tax",
+          "Prepare reference explanations"
+        ],
+        "defaultPrompt": [
+          "帮我核对境外券商账单，说明年度测算需要哪些资料。",
+          "对照我提供的CRS合计与年度账单，说明能确认的差异。",
+          "根据已复核的年度测算，草拟一页税务机关情况说明。"
+        ],
         "composerIcon": "./assets/icon.svg",
         "logo": "./assets/icon.svg",
         "brandColor": "#205675"
