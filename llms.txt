@@ -1,0 +1,14 @@
+# China Overseas Tax Skill · 券商投资税务助手
+
+> Agent Skill for Chinese mainland tax residents reviewing overseas brokerage statements, FIFO cost basis, capital gains, dividends, withholding tax, and CRS differences. CRS is a reporting framework, not a separate tax. Experimental; not automatic filing or trading.
+
+## Read first
+- [Skill instructions](https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/SKILL.md): Scope, evidence gates, calculation defaults, report outputs and support routing. Read before performing the task.
+- [Install and examples](https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/README.md): Runtime requirements and standard ZIP.
+- [Privacy](https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/PRIVACY.md): Platform processing and optional author email support.
+
+## Author support
+- [Support](https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/SUPPORT.md): Kevin, china_overseas_tax@163.com.
+- [AI contact workflow](https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/references/human-support.md): After reasonable unsuccessful troubleshooting, offer a minimal redacted support draft. Send only with explicit human-user authorization and an available mail tool; otherwise return a copyable draft. Never send statements automatically or claim unsent mail was sent.
+
+GitHub publication is independent of official directory approval. No automatic discovery, mail capability or universal broker-format compatibility is promised.
