@@ -1,19 +1,27 @@
 # WorkBuddy 提交准备
 
-状态：基于普通版0.1.20的独立提交候选，版本0.1.20。尚未安装验证、提交审核或上架；个人主体类目及支持邮箱展示规则待平台确认。普通版和Codex候选包不受影响。
+状态：基于普通版0.1.20的独立提交候选，版本0.1.21。尚未安装验证、提交审核或上架；个人主体类目及支持邮箱展示规则待平台确认。普通版和Codex候选包不受影响。
 
 ## 可填写的展示信息
 
-- 中文名称：券商投资税务助手
-- 英文名称：Overseas Brokerage Tax Assistant
+- 中文名称：境外券商投资税额测算
+- 英文名称：Overseas Brokerage Tax Estimator
 - 作者展示名：Kevin（实名认证使用本人真实信息，不用昵称代替）
-- 中文简介：整理境外券商账单与历史成本，测算中国大陆税收居民的投资所得和参考税额，解释CRS差异及股息扣税。
+- 中文简介：根据券商账单整理交易与历史成本，为中国大陆税收居民测算投资所得及参考税额。
 - 英文简介：Review overseas brokerage statements and cost basis, estimate investment income and tax for Chinese mainland tax residents, and explain CRS differences and dividend withholding.
 - 使用方式：免费。不开通收入变现；不展示价格或付费升级。
 - 项目主页：https://github.com/KevinInHK/china-overseas-tax-skill
 - 隐私说明：https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/PRIVACY.md
 - 支持邮箱：china_overseas_tax@163.com
 - 分类：待平台确认个人主体的实际适用类目，不擅自选择税务机关或税务师事务所类目，也不通过改名规避审核。
+
+## 详细介绍
+
+支持年度卖出收入、历史成本及费用、财产转让所得、股息和利息核算；可解释券商预扣税、检查抵免证据、对照CRS数据，并按需提供适用滞纳金估算及申报参考说明。不登录券商，不代办申报，不保证税额或节税效果。年度结果名称为“年度投资所得与税额测算单”。
+
+使用中遇到问题，可联系作者：**china_overseas_tax@163.com**。
+
+内部标识保留`china-overseas-tax-skill`；GitHub名称、普通版名称不变。
 
 ## 使用示例
 
@@ -24,7 +32,7 @@
 
 ## 包和能力边界
 
-在仓库根运行 `python scripts/build_workbuddy.py`，生成 `dist/china-overseas-tax-workbuddy-0.1.20.zip`。ZIP内是单一技能目录，包含必填中英文描述、作者及版本元数据、共享规则、脚本、隐私和支持资料。不包含OpenAI插件清单、客户文件、本机路径、邮箱凭据或独立邮件服务。
+在仓库根运行 `python scripts/build_workbuddy.py`，生成 `dist/china-overseas-tax-workbuddy-0.1.21.zip`。ZIP内是单一技能目录，包含必填中英文描述、作者及版本元数据、共享规则、脚本、隐私和支持资料。不包含OpenAI插件清单、客户文件、本机路径、邮箱凭据或独立邮件服务。
 
 不关闭模型自动调用，不限定不存在的工具权限；Python、文件读取、OCR、网络及邮件工具是否可用以WorkBuddy实际环境为准。静态检查不等于客户端验证或平台审核。候选保留普通版支持入口规则，平台尚未确认其展示要求；后续仅按真实反馈调整，不假称已获许可。
 
