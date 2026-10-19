@@ -12,7 +12,7 @@ def main():
     text = (ROOT / 'SKILL.md').read_text(encoding='utf-8')
     _, frontmatter, body = text.split('---', 2)
     description = '面向中国大陆税收居民，分析境外券商账单，核算FIFO成本、交易盈亏、股息及利息，折算人民币并测算参考税额。适用于港美股等境外证券投资报税、股息预扣税及抵免分析、CRS对账和申报说明草拟。关键资料不足先补齐，不代办申报。 用户询问港美股报税、境外投资交税、历史成本、分红扣税或税局CRS数据差异时调用；可直接处理单项问题。'
-    version = '0.1.24'  # WorkBuddy profile version; standard Skill stays unchanged.
+    version = '0.1.25'  # WorkBuddy profile version; standard Skill stays unchanged.
     metadata = {
         'name': 'china-overseas-tax-skill',
         'display_name': '境外券商投资税额测算',

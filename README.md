@@ -1,8 +1,8 @@
 # 券商投资税务助手 · China Overseas Tax Skill
 
-帮助**中国大陆税收居民**处理境外券商投资税务：从年度／月度账单重建历史成本，测算财产转让所得、股息和利息，解释CRS数据差异，准备申报参考材料。当前版本：**0.1.22**，实验性辅助工具。
+帮助**中国大陆税收居民**处理境外券商投资税务：从年度／月度账单重建历史成本，测算财产转让所得、股息和利息，解释CRS数据差异，准备申报参考材料。当前版本：**0.1.23**，实验性辅助工具。
 
-**[下载普通版](https://github.com/KevinInHK/china-overseas-tax-skill/releases/tag/v0.1.22)** · [给AI的入口](llms.txt) · [人工支持](SUPPORT.md) · [隐私说明](PRIVACY.md)
+**[下载普通版](https://github.com/KevinInHK/china-overseas-tax-skill/releases/tag/v0.1.23)** · [给AI的入口](llms.txt) · [人工支持](SUPPORT.md) · [隐私说明](PRIVACY.md)
 
 ## 联系作者 Kevin
 
@@ -25,7 +25,7 @@
 
 这是 **Agent Skill**，不是独立Agent、网站或券商连接器。需要具备文件读取和代码执行能力的AI环境。算术脚本只依赖Python 3.10+标准库；PDF／Excel／OCR读取及网络查询由所在平台提供。本项目没有独立模型API密钥要求，平台自身的费用与权限由使用者管理。
 
-1. 下载普通版 `china-overseas-tax-skill-v0.1.22.zip` 并解压。
+1. 下载普通版 `china-overseas-tax-skill-v0.1.23.zip` 并解压。
 2. 用所在平台的技能安装功能选择包含 `SKILL.md` 的目录，或放入该平台配置的技能目录。各平台发现路径不同，不保证自动安装通用。
 3. 在对话中调用；若平台无Skill发现功能，可请具备文件读取能力的AI读取 `SKILL.md` 后处理。
 

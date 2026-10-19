@@ -57,3 +57,5 @@ sell/cover/dividend/interest还需核验所得country和tax_category（capital�
 ## 到账口径与程序约束（0.1.22）
 
 默认dividend_basis=statement_net；不自动gross-up。含该口径股息时输出status=statement_net_estimate，incomes的net_received_rmb及amount_basis标明金额性质，不标为gross_rmb；仅允许credit_mode=deferred，程序拒绝在净额口径直接减境外税。独立税前/抵免情景必须显式gross，并用对应税前输入和已核验抵免证据；不能只改标签。旧版示例税前抵免路径已显式标为gross，不改变默认到账规则。输出为参考算术，不是最终申报税额。
+
+员工激励股成本按[年度交付规则](annual-delivery.md)单独判断。“客户支付0”不能直接生成零成本批次；重建的批次来源须记录适用取得时点、价格来源及证据/假设状态，不伪装为普通现金买入，不把薪酬税加入投资合计。临时脚本同样遵守。

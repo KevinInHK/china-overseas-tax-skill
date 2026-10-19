@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    version = '0.1.24'
+    version = '0.1.25'
     summary = '分析境外券商账单，为中国大陆税收居民核算投资盈亏、股息及参考税额，支持预扣税抵免分析和CRS对账。'
     description = summary + ' 用户询问港美股报税、境外证券投资交税、FIFO历史成本、分红扣税或CRS差异时调用。支持申报参考说明；关键资料不足先补齐，不自动申报。'
     fields = {
