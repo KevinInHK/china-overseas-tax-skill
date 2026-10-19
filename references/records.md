@@ -13,7 +13,7 @@
 - short/cover：卖空开仓/买回平仓，字段同上。
 - split：factor改变股数，不改变总成本。
 - transfer：quantity、to_account；配对转仓，保留批次及原始成本。
-- dividend/interest：amount为税前收入。
+- dividend：amount默认是结单实际到账金额，config.dividend_basis=statement_net（程序默认）；可带amount_basis=statement_net。interest：amount按结单利息收入原始标签，不能混入股息。独立税前/抵免场景显式dividend_basis=gross，股息amount须为有依据的税前金额。
 - withheld：amount、income_id、income_year、country、eligible=true、evidence（非空文字，说明凭证文件及位置）。链接目标年度被核算的收入/处置；扣税的法律性质、来源国与凭证资格由你核验。
 - refund：amount、withholding_id；可发生次年，关联扣税而非当期收入。超过扣税原额是矛盾，不当零处理。
 - 其他kind或reviewed=false：进入待复核。后续同账户资产的成本关联处置不可确认。
@@ -32,7 +32,7 @@ sell/cover/dividend/interest还需核验所得country和tax_category（capital�
 
 0.1.6完整性含义更新：completeness审查核心交易与收入范围。credit_mode=deferred跳过境外抵免计算，允许核心齐全时输出base_ready和未抵免基础税额；缺失扣税凭证不能被填零或伪装verified。最终补缴额须等抵免核验。此前将全部抵免缺口一起拦截的规定已被替代。
 
-0.1.7测算门槛：基础身份/范围、交易、真实成本费用、税前收入齐全即同轮交付报告；产品全名等非必要缺口放报告后。completeness审查原始数字与覆盖，不要求所有产品元数据已完善。分类或处理假设在报告明确披露，不将假设记成已证明事实。
+0.1.7测算门槛：基础身份/范围、交易、真实成本费用、结单实际到账收入齐全即同轮交付报告；产品全名等非必要缺口放报告后。completeness审查原始数字与覆盖，不要求所有产品元数据已完善。分类或处理假设在报告明确披露，不将假设记成已证明事实。
 
 0.1.8：capital_netting默认broker_year；credit_mode默认deferred。每事件broker统一券商主体，同券商账户跨账户年度互抵，不跨券商。输出brokers含全年卖出额、已实现对应收入、成本费用、净所得及税额；两种销售额不一致须解释开仓/平仓及期间差异。broker_year抵免必须另完成分国限额与基数分配核验，不复用逐笔或分国净额生成的抵免结果。
 
@@ -53,3 +53,7 @@ sell/cover/dividend/interest还需核验所得country和tax_category（capital�
 ## 合理推算与固定交付补充
 
 年度核算按[年度交付规则](annual-delivery.md)执行。字段可由现有资料及公开数据合理重建，不把缺少单独证明直接当作不可测算。推算比例可用于测算并记录范围和依据，抵免凭证另行完善；已核实、重建及纯假设情景分别标注。不得通过伪填verified或缩小账户范围绕过真实门槛。
+
+## 到账口径与程序约束（0.1.22）
+
+默认dividend_basis=statement_net；不自动gross-up。含该口径股息时输出status=statement_net_estimate，incomes的net_received_rmb及amount_basis标明金额性质，不标为gross_rmb；仅允许credit_mode=deferred，程序拒绝在净额口径直接减境外税。独立税前/抵免情景必须显式gross，并用对应税前输入和已核验抵免证据；不能只改标签。旧版示例税前抵免路径已显式标为gross，不改变默认到账规则。输出为参考算术，不是最终申报税额。

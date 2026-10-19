@@ -31,6 +31,9 @@ def money(value):
 def calculate(document):
     cfg = document['config']
     year = int(cfg['year'])
+    dividend_basis = cfg.get('dividend_basis', 'statement_net')
+    if dividend_basis not in ('statement_net', 'gross'):
+        raise ValueError('Invalid dividend_basis')
     completeness = document.get('completeness', {})
     if completeness.get('verified') is not True or not completeness.get('scope') or not completeness.get('basis') or completeness.get('gaps') != []:
         return {'status':'needs_data','review':completeness.get('gaps') or [{'reason':'Completeness of requested scope not verified'}],'message':'Incomplete data: no calculation result released'}
@@ -110,7 +113,12 @@ def calculate(document):
                 if e['_year'] == year:
                     if e.get('tax_category') != 'income' or not e.get('country') or e['country']=='CN':
                         raise ValueError('Income category/source country not reviewed for overseas calculation')
-                    incomes.append({'account':e['account'],'broker':e.get('broker',e['account']),'id':e['id'],'country':e['country'],'gross_rmb':amount*rates[e['currency']],'source':e['source']})
+                    basis = dividend_basis if kind == 'dividend' else 'gross'
+                    if e.get('amount_basis', basis) != basis:
+                        raise ValueError('Income amount basis conflicts with calculation basis')
+                    row = {'account':e['account'],'broker':e.get('broker',e['account']),'id':e['id'],'kind':kind,'country':e['country'],'amount_basis':basis,'amount_rmb':amount*rates[e['currency']],'source':e['source']}
+                    row['net_received_rmb' if basis == 'statement_net' else 'gross_rmb'] = row['amount_rmb']
+                    incomes.append(row)
                 continue
             lots = positions[key]
             if kind == 'split':
@@ -170,8 +178,11 @@ def calculate(document):
         grouped[d['country']]['capital'] += d['gain_rmb'] if mode=='country_year' else max(d['gain_rmb'],ZERO)
         taxable_ids[d['id']]=d
     for i in incomes:
-        grouped[i['country']]['income'] += i['gross_rmb'];taxable_ids[i['id']]=i
-    credit_mode=cfg.get('credit_mode','deferred' if mode=='broker_year' else 'verified')
+        grouped[i['country']]['income'] += i['amount_rmb'];taxable_ids[i['id']]=i
+    statement_net_estimate = any(i['kind'] == 'dividend' and i['amount_basis'] == 'statement_net' for i in incomes)
+    credit_mode=cfg.get('credit_mode','deferred' if mode=='broker_year' or statement_net_estimate else 'verified')
+    if statement_net_estimate and credit_mode != 'deferred':
+        raise ValueError('Statement-net estimate cannot apply foreign tax credits; calculate a separate gross-basis credit scenario')
     if mode=='broker_year' and credit_mode=='verified':
         raise ValueError('Broker-year base estimate and source-country credit allocation must be reconciled separately')
     if credit_mode not in ('verified','deferred'):raise ValueError('Invalid credit_mode')
@@ -212,7 +223,7 @@ def calculate(document):
     broker_totals=defaultdict(lambda:{'gross':ZERO,'cost':ZERO,'net':ZERO,'income':ZERO,'annual_sales':ZERO})
     for d in dispositions:
         b=broker_totals[d['broker']];b['gross']+=d['gross_proceeds_rmb'];b['cost']+=d['cost_and_fees_rmb'];b['net']+=d['gain_rmb']
-    for i in incomes:broker_totals[i['broker']]['income']+=i['gross_rmb']
+    for i in incomes:broker_totals[i['broker']]['income']+=i['amount_rmb']
     for e in parsed:
         if e['_year']==year and e.get('kind') in ('sell','short'):
             broker_totals[e.get('broker',e['account'])]['annual_sales']+=positive(e['amount'])*rates[e['currency']]
@@ -229,7 +240,7 @@ def calculate(document):
         return v
     if review:
         return serialize({'status':'needs_data','review':review,'message':'Unresolved evidence: no calculation result released'})
-    return serialize({'status':'base_ready' if credit_mode=='deferred' else 'ready','credit_status':'pending, not applied; this is before-credit tax, not final tax payable' if credit_mode=='deferred' else 'verified input credit calculation','scope':'reviewed input subset; not all-world tax liability or official credit approval','conditions':cfg,'dispositions':dispositions,'incomes':incomes,'countries':countries,'brokers':brokers,'netting_notice':'Broker-year netting is a disclosed estimation convention, not a universal legal finding; no cross-broker loss offset','sales_notice':'Annual gross sales includes all sell/short openings in the target year; matched proceeds covers realized lots only. Differences require reconciliation, not forced subtraction. Costs include fees once.','subset_tax_rmb':money(sum((dec(b['base_tax_rmb']) for b in brokers),ZERO) if mode=='broker_year' else sum((dec(c['tax_after_credit_rmb']) for c in countries),ZERO)),'review':review,'open_positions':open_positions})
+    return serialize({'status':'statement_net_estimate' if statement_net_estimate else ('base_ready' if credit_mode=='deferred' else 'ready'),'dividend_basis':dividend_basis,'estimate_notice':'Statement net cash receipt scenario; not statutory filing liability; no automatic gross-up or withholding credit applied' if statement_net_estimate else 'Explicit gross-basis calculation','credit_status':'pending, not applied; this is before-credit tax, not final tax payable' if credit_mode=='deferred' else 'verified input credit calculation','scope':'reviewed input subset; not all-world tax liability or official credit approval','conditions':cfg,'dispositions':dispositions,'incomes':incomes,'countries':countries,'brokers':brokers,'netting_notice':'Broker-year netting is a disclosed estimation convention, not a universal legal finding; no cross-broker loss offset','sales_notice':'Annual gross sales includes all sell/short openings in the target year; matched proceeds covers realized lots only. Differences require reconciliation, not forced subtraction. Costs include fees once.','subset_tax_rmb':money(sum((dec(b['base_tax_rmb']) for b in brokers),ZERO) if mode=='broker_year' else sum((dec(c['tax_after_credit_rmb']) for c in countries),ZERO)),'review':review,'open_positions':open_positions})
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
@@ -241,4 +252,4 @@ if __name__=='__main__':
         parser.exit(2,'Input rejected: '+str(exc)+'\n')
     out=Path(args.out);out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf8')
-    print('needs_data; no calculation result released' if result['status']=='needs_data' else result['status']+'; '+('before-credit tax RMB ' if result['status']=='base_ready' else 'tax RMB ')+result['subset_tax_rmb'])
+    print('needs_data; no calculation result released' if result['status']=='needs_data' else result['status']+'; '+('statement-net reference estimate RMB ' if result['status']=='statement_net_estimate' else ('before-credit tax RMB ' if result['status']=='base_ready' else 'tax RMB '))+result['subset_tax_rmb'])

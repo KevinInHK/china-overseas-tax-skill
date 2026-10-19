@@ -5,7 +5,7 @@ m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 def event(id,kind,date='2024-01-01',**extra):
  return {'id':id,'kind':kind,'date':date,'account':'TEST-A','asset':'DEMO','currency':'USD','country':'US','tax_category':'income' if kind in ['dividend','interest'] else 'capital','reviewed':True,'source':{'file':'synthetic','locator':id},**extra}
 def doc(events,**extra):
- return {'completeness':{'verified':True,'scope':'synthetic requested scope','basis':'all synthetic evidence covered','gaps':[]},'config':{'year':2024,'fx':{'USD':'1'},'fx_basis':'synthetic test rate; not a real FX quote','capital_netting':'per_disposal','tax_rate':'0.20',**extra},'events':events}
+ return {'completeness':{'verified':True,'scope':'synthetic requested scope','basis':'all synthetic evidence covered','gaps':[]},'config':{'year':2024,'fx':{'USD':'1'},'fx_basis':'synthetic test rate; not a real FX quote','capital_netting':'per_disposal','tax_rate':'0.20','dividend_basis':'gross',**extra},'events':events}
 class Calculations(unittest.TestCase):
  def test_fifo(self):
   r=m.calculate(doc([event('a','buy',quantity='2',amount='20',fees='2'),event('b','buy',quantity='1',amount='20',fees='0'),event('s','sell',quantity='2.5',amount='50',fees='1')]))
@@ -74,4 +74,20 @@ class Calculations(unittest.TestCase):
  def test_short_report_proceeds_cost_reconcile(self):
   r=m.calculate(doc([event('a','short',quantity='10',amount='100',fees='1'),event('b','cover',quantity='10',amount='80',fees='1')],capital_netting='broker_year'))
   b=r['brokers'][0];self.assertEqual(b['realized_matched_proceeds_rmb'],'100.00');self.assertEqual(b['matched_cost_and_fees_rmb'],'82.00');self.assertEqual(b['capital_net_income_rmb'],'18.00')
+ def test_default_statement_net_never_grosses_up(self):
+  d=doc([event('d','dividend',amount='70'),event('w','withheld',amount='30',income_id='d',income_year=2024,eligible=True,evidence='synthetic')])
+  d['config'].pop('dividend_basis')
+  r=m.calculate(d)
+  self.assertEqual(r['status'],'statement_net_estimate');self.assertEqual(r['subset_tax_rmb'],'14.00')
+  self.assertEqual(r['incomes'][0]['net_received_rmb'],'70');self.assertNotIn('gross_rmb',r['incomes'][0])
+  self.assertEqual(r['countries'][0]['credit_rmb'],'0.00')
+ def test_statement_net_rejects_double_credit(self):
+  with self.assertRaisesRegex(ValueError,'cannot apply foreign tax credits'):
+   m.calculate(doc([event('d','dividend',amount='70')],dividend_basis='statement_net',credit_mode='verified'))
+ def test_statement_net_rejects_gross_label(self):
+  r=m.calculate(doc([event('d','dividend',amount='100',amount_basis='gross')],dividend_basis='statement_net'))
+  self.assertEqual(r['status'],'needs_data');self.assertNotIn('subset_tax_rmb',r)
+ def test_explicit_gross_credit_path_still_works(self):
+  r=m.calculate(doc([event('d','dividend',amount='100'),event('w','withheld',amount='10',income_id='d',income_year=2024,eligible=True,evidence='synthetic')],dividend_basis='gross',credit_mode='verified'))
+  self.assertEqual(r['subset_tax_rmb'],'10.00');self.assertEqual(r['incomes'][0]['gross_rmb'],'100')
 if __name__=='__main__':unittest.main()
