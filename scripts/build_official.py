@@ -56,17 +56,17 @@ def package_files():
 
 ## 来源与金额边界'''
     files[SKILL + 'references/tax-authority-drafts.md'] = (before + replacement + after).encode('utf-8')
-    files['README.md'] = '''# 券商投资税务助手：官方提交候选包
+    manifest = json.loads(files['plugin.json'])
+    files['README.md'] = f'''# 券商投资税务助手：官方提交候选包
 
-版本1.0.0-rc.5，基于原版0.1.23共享的算术脚本及参考资料。
+版本{manifest['version']}，基于原版0.1.23共享的算术脚本及参考资料。
 
 这是需要本地执行能力的skills-only插件包，不含MCP、hooks、遥测或作者服务器。按平台提供的本地插件安装流程使用；安装并不代表官方已审核或已上架。Python、PDF/Excel读取和OCR能力须由执行环境提供。
 
-入口为skills/china-overseas-tax-skill/SKILL.md。PRIVACY.md和TERMS.md是待发布者确认的政策材料，SUPPORT.md提供实际支持邮箱。资料不自动发送给作者，不保证AI平台全程离线。
+入口为skills/china-overseas-tax-skill/SKILL.md。PRIVACY.md、TERMS.md和SUPPORT.md提供实际政策及支持方式，其公开地址见plugin.json。资料不自动发送给作者，不保证AI平台全程离线。
 
-本候选只完成封装及静态结构检查。换环境运行、干净安装及扩展案例验证尚未开展；原版的历史测试结果不是本包端到端验证。正式提交还需处理可公开访问的政策材料、开发者身份/提交权限及真实运行验证，不因文件存在而视为已满足审核。
+本包支持在解压后的技能目录运行 python -m unittest discover -s tests，使用随包合成数据检查算术脚本。封装、静态检查及包内测试不等于平台安装及AI完整工作流验证；换设备测试及扩展案例验证尚未完成。上传后仍须完成平台扫描、确认提交权限及政策声明，不保证审核通过。
 '''.encode('utf-8')
-    manifest = json.loads(files['plugin.json'])
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in sorted(files.items())}
     files['PACKAGE-RECEIPT.json'] = json.dumps({
         'profile': 'codex-submission-candidate', 'version': manifest['version'],

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "china-overseas-tax",
-  "version": "1.0.0-rc.5",
+  "version": "1.0.0-rc.6",
   "description": "Review overseas brokerage statements and prepare traceable investment-income tax estimates for Chinese mainland tax residents.",
   "author": {
     "name": "Kevin",
@@ -23,6 +23,10 @@
         "shortDescription": "整理境外券商账单与所得测算",
         "longDescription": "帮助中国大陆税收居民梳理券商账单、历史成本和股息扣税，形成可追溯的年度测算、CRS对照及申报参考说明。原始文件识别依赖执行环境；缺少核心证据时保留缺口，不代登录、提交或缴款。结果不是税务机关核定结论。",
         "developerName": "Kevin",
+        "websiteURL": "https://github.com/KevinInHK/china-overseas-tax-skill",
+        "supportURL": "https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/distribution/codex/SUPPORT.md",
+        "privacyPolicyURL": "https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/distribution/codex/PRIVACY.md",
+        "termsOfServiceURL": "https://github.com/KevinInHK/china-overseas-tax-skill/blob/main/distribution/codex/TERMS.md",
         "category": "Productivity",
         "capabilities": [
           "Review brokerage statements",
